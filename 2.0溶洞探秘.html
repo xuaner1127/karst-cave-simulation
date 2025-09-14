@@ -1,0 +1,2777 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>溶洞探秘：喀斯特奇观</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0c1923, #1a2a3a, #2c3e50);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .container {
+            max-width: 1000px;
+            width: 100%;
+            background: rgba(0, 15, 30, 0.9);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            border: 2px solid rgba(0, 180, 255, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* 装饰性矿物晶体 */
+        .crystal {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: rgba(41, 182, 246, 0.2);
+            border: 2px solid rgba(41, 182, 246, 0.5);
+            transform: rotate(45deg);
+            z-index: -1;
+        }
+        
+        .crystal:nth-child(1) {
+            top: 20px;
+            left: 20px;
+            animation: pulse 4s infinite;
+        }
+        
+        .crystal:nth-child(2) {
+            bottom: 40px;
+            right: 30px;
+            width: 40px;
+            height: 40px;
+            animation: pulse 5s infinite 1s;
+        }
+        
+        .crystal:nth-child(3) {
+            top: 120px;
+            right: 50px;
+            animation: pulse 3.5s infinite 0.5s;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.8; }
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 25px;
+            position: relative;
+            z-index: 10;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            text-shadow: 0 0 15px rgba(0, 200, 255, 0.8);
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 20px;
+            color: #e0f7fa;
+            line-height: 1.6;
+        }
+        
+        .game-area {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .cave-container {
+            flex: 1;
+            min-width: 300px;
+            height: 500px;
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.6);
+            border: 2px solid #2c5364;
+        }
+        
+        #caveCanvas {
+            background: #0a1520;
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+        
+        .info-section {
+            flex: 1;
+            min-width: 300px;
+            background: rgba(0, 30, 60, 0.7);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(0, 150, 255, 0.4);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        
+        .info-title {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #4fc3f7;
+            text-align: center;
+        }
+        
+        .info-content {
+            height: 300px;
+            overflow-y: auto;
+            padding: 15px;
+            background: rgba(0, 20, 40, 0.5);
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(0, 150, 255, 0.3);
+        }
+        
+        .formation-info {
+            display: none;
+        }
+        
+        .formation-info.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .formation-info h3 {
+            font-size: 1.8rem;
+            color: #4fc3f7;
+            margin-bottom: 15px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .formation-description {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 15px;
+            color: #e0f7fa;
+        }
+        
+        .highlight {
+            color: #ffcc80;
+            font-weight: bold;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            font-size: 1.1rem;
+            background: linear-gradient(135deg, #00c6ff, #0072ff);
+            border: none;
+            border-radius: 50px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 114, 255, 0.5);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 114, 255, 0.7);
+        }
+        
+        .btn:active {
+            transform: translateY(1px);
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(135deg, #ff7e5f, #feb47b);
+        }
+        
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .slider-container {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding: 10px;
+            background: rgba(0, 30, 60, 0.5);
+            border-radius: 10px;
+        }
+        
+        .slider-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.1rem;
+            color: #81d4fa;
+        }
+        
+        .slider-value {
+            color: #4fc3f7;
+            font-weight: bold;
+            min-width: 30px;
+            text-align: right;
+        }
+        
+        .ph-indicator {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin-left: 5px;
+            vertical-align: middle;
+        }
+        
+        .fun-facts {
+            background: rgba(0, 40, 80, 0.4);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            border: 1px solid rgba(0, 150, 255, 0.3);
+        }
+        
+        .fun-facts h4 {
+            color: #4fc3f7;
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .fact-list {
+            list-style: none;
+            padding: 0 15px;
+        }
+        
+        .fact-item {
+            margin-bottom: 12px;
+            padding: 8px 10px;
+            background: rgba(0, 20, 40, 0.3);
+            border-radius: 8px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            transition: transform 0.3s ease;
+        }
+        
+        .fact-item:hover {
+            transform: translateX(5px);
+            background: rgba(0, 30, 60, 0.5);
+        }
+        
+        .fact-icon {
+            color: #4fc3f7;
+            font-size: 1.2rem;
+            min-width: 24px;
+            margin-top: 2px;
+        }
+        
+        .fact-text {
+            flex: 1;
+            line-height: 1.6;
+        }
+        
+        .chem-formula {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-family: monospace;
+            margin: 5px 0;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .time-scale {
+            text-align: center;
+            font-style: italic;
+            color: #81d4fa;
+            margin-top: 10px;
+            padding: 8px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+        }
+        
+        .formation-image {
+            width: 100%;
+            height: 150px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            margin: 15px auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 5rem;
+            color: #8d6e63;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .tooltip {
+            position: absolute;
+            background: rgba(0, 30, 50, 0.95);
+            color: #e0f7fa;
+            padding: 12px 15px;
+            border-radius: 10px;
+            font-size: 1rem;
+            max-width: 240px;
+            z-index: 100;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+            border: 1px solid rgba(0, 200, 255, 0.4);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+            line-height: 1.5;
+        }
+        
+        .rate-indicator {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            padding: 8px;
+            background: rgba(0, 40, 80, 0.5);
+            border-radius: 8px;
+            font-size: 0.95rem;
+        }
+        
+        .rate-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .rate-bar {
+            width: 6px;
+            height: 40px;
+            background: #1a2a3a;
+            border-radius: 3px;
+            margin-top: 5px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .rate-fill {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background: linear-gradient(to top, #00c6ff, #0072ff);
+            transition: height 0.5s ease;
+        }
+        
+        .rate-label {
+            margin-top: 5px;
+            font-size: 0.85rem;
+            color: #81d4fa;
+        }
+        
+        .auto-drop-indicator {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(0, 100, 100, 0.7);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 1rem;
+            color: #80deea;
+            border: 1px solid rgba(0, 200, 200, 0.3);
+            z-index: 10;
+        }
+        
+        .growth-indicator {
+            position: absolute;
+            bottom: 15px;
+            left: 15px;
+            background: rgba(0, 60, 100, 0.7);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 1rem;
+            color: #81d4fa;
+            border: 1px solid rgba(0, 150, 255, 0.3);
+            z-index: 10;
+        }
+        
+        /* PH值指示器颜色 */
+        .ph-4 { background: #ff3300; }
+        .ph-5 { background: #ff6600; }
+        .ph-6 { background: #ffcc00; }
+        .ph-7 { background: #66cc33; }
+        .ph-8 { background: #0099cc; }
+        
+        /* PH值影响说明区域 */
+        .ph-explanation {
+            background: rgba(0, 40, 80, 0.4);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 15px;
+            border: 1px solid rgba(0, 150, 255, 0.3);
+        }
+        
+        .ph-explanation h4 {
+            color: #4fc3f7;
+            margin-bottom: 10px;
+            text-align: center;
+            font-size: 1.2rem;
+        }
+        
+        .ph-explanation p {
+            line-height: 1.6;
+            margin-bottom: 12px;
+            color: #e0f7fa;
+            font-size: 1rem;
+        }
+        
+        .ph-explanation .highlight {
+            color: #ffcc80;
+            font-weight: bold;
+        }
+        
+        .ph-chart {
+            display: flex;
+            height: 120px;
+            align-items: flex-end;
+            justify-content: space-around;
+            margin: 15px 0;
+            padding: 10px 0;
+            background: rgba(0, 20, 40, 0.3);
+            border-radius: 8px;
+        }
+        
+        .ph-bar {
+            width: 15%;
+            background: linear-gradient(to top, #00c6ff, #0072ff);
+            border-radius: 4px 4px 0 0;
+            position: relative;
+            transition: height 0.5s ease;
+        }
+        
+        .ph-bar-label {
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.8rem;
+            white-space: nowrap;
+        }
+        
+        .ph-bar-value {
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.8rem;
+            color: #81d4fa;
+        }
+        
+        .formation-selector {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .formation-btn {
+            padding: 8px 15px;
+            background: rgba(0, 30, 60, 0.6);
+            border: 1px solid rgba(0, 150, 255, 0.4);
+            border-radius: 30px;
+            color: #81d4fa;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+        
+        .formation-btn.active {
+            background: linear-gradient(135deg, #00c6ff, #0072ff);
+            color: white;
+            border-color: rgba(0, 150, 255, 0.8);
+        }
+        
+        /* 石柱形成动画 */
+        @keyframes columnFormed {
+            0% { box-shadow: 0 0 0 rgba(255, 215, 0, 0.7); }
+            50% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.9); }
+            100% { box-shadow: 0 0 0 rgba(255, 215, 0, 0.7); }
+        }
+        
+        .column-highlight {
+            animation: columnFormed 2s ease-in-out;
+        }
+        
+        /* 优化后的石柱图标样式 - 横向模糊纹路 */
+        .column-icon {
+            position: relative;
+            width: 80px;
+            height: 100px;
+            margin: 0 auto;
+        }
+        
+        .column-icon .pillar {
+            position: absolute;
+            width: 50px;
+            height: 100px;
+            background: linear-gradient(to bottom, #8d6e63, #5d4037);
+            border-radius: 10px;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            overflow: hidden;
+        }
+        
+        /* 横向模糊纹路 */
+        .column-icon .horizontal-texture {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(to bottom, 
+                    rgba(0,0,0,0.1) 0%, 
+                    transparent 5%,
+                    transparent 15%,
+                    rgba(0,0,0,0.1) 20%,
+                    transparent 25%,
+                    transparent 35%,
+                    rgba(0,0,0,0.1) 40%,
+                    transparent 45%,
+                    transparent 55%,
+                    rgba(0,0,0,0.1) 60%,
+                    transparent 65%,
+                    transparent 75%,
+                    rgba(0,0,0,0.1) 80%,
+                    transparent 85%,
+                    transparent 95%,
+                    rgba(0,0,0,0.1) 100%
+                );
+            animation: textureMove 20s infinite linear;
+        }
+        
+        @keyframes textureMove {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 200px; }
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .game-area {
+                flex-direction: column;
+            }
+            
+            .cave-container {
+                height: 400px;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .ph-chart {
+                height: 100px;
+            }
+            
+            .quiz-section {
+                margin-top: 20px;
+            }
+        }
+        
+        /* 新添加的标题样式 */
+        .title-container {
+            position: relative;
+            padding: 15px 0;
+            margin-bottom: 15px;
+        }
+        
+        .title-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(0, 200, 255, 0.4) 0%, transparent 70%);
+            z-index: -1;
+            opacity: 0.7;
+        }
+        
+        /* 新添加的洞穴效果 */
+        .cave-stalactite {
+            position: absolute;
+            top: -5px;
+            width: 100%;
+            height: 30px;
+            background: linear-gradient(to bottom, #1a2432, #0a1520);
+            border-radius: 0 0 50% 50%;
+        }
+        
+        .cave-stalagmite {
+            position: absolute;
+            bottom: -5px;
+            width: 100%;
+            height: 30px;
+            background: linear-gradient(to top, #1a2432, #0a1520);
+            border-radius: 50% 50% 0 0;
+        }
+        
+        /* ========== 整合后的互动问答区样式 ========== */
+        .quiz-section {
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(0, 40, 80, 0.5);
+            border-radius: 12px;
+            border: 1px solid rgba(0, 150, 255, 0.3);
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .quiz-title {
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            background: linear-gradient(135deg, #ffeb3b, #ffc107);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-family: 'Arial Rounded MT Bold', 'Helvetica Rounded', Arial, sans-serif;
+            text-shadow: 0 0 10px rgba(255, 235, 59, 0.4);
+            position: relative;
+            padding: 10px 0;
+        }
+        
+        .quiz-title::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 25%;
+            width: 50%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #ffeb3b, transparent);
+            border-radius: 50%;
+        }
+        
+        .progress-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding: 12px 15px;
+            background: rgba(0, 30, 60, 0.5);
+            border-radius: 30px;
+            border: 1px solid rgba(0, 150, 255, 0.2);
+        }
+        
+        .progress-bar {
+            flex-grow: 1;
+            height: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            margin: 0 15px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00c6ff, #0072ff);
+            border-radius: 6px;
+            width: 0%;
+            transition: width 0.5s ease;
+            box-shadow: 0 0 10px rgba(0, 198, 255, 0.5);
+        }
+        
+        .progress-text {
+            font-size: 1rem;
+            color: #81d4fa;
+            min-width: 80px;
+            text-align: center;
+        }
+        
+        /* 题型提示标签 */
+        .question-type {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: bold;
+        }
+        
+        .type-single { background: linear-gradient(135deg, #00c6ff, #0072ff); }
+        .type-multi { background: linear-gradient(135deg, #9c27b0, #673ab7); }
+        .type-tf { background: linear-gradient(135deg, #4caf50, #8bc34a); }
+        .type-sort { background: linear-gradient(135deg, #ff9800, #ff5722); }
+        
+        .quiz-question {
+            font-size: 1.15rem;
+            margin-bottom: 20px;
+            color: #e0f7fa;
+            line-height: 1.6;
+            padding: 12px;
+            background: rgba(0, 30, 60, 0.3);
+            border-radius: 8px;
+        }
+        
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .quiz-option {
+            display: flex;
+            align-items: flex-start;
+            padding: 10px 12px;
+            background: rgba(0, 30, 60, 0.3);
+            border-radius: 8px;
+            border: 1px solid rgba(0, 150, 255, 0.2);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .quiz-option:hover {
+            background: rgba(0, 60, 100, 0.4);
+            transform: translateX(5px);
+        }
+        
+        .quiz-option input {
+            margin-right: 10px;
+            margin-top: 4px;
+        }
+        
+        .quiz-option label {
+            color: #e0f7fa;
+            cursor: pointer;
+            flex: 1;
+        }
+        
+        /* 排序题样式 */
+        .sort-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 20px 0;
+            border-radius: 8px;
+            overflow: hidden;
+            background: rgba(0, 30, 60, 0.2);
+            border: 1px solid rgba(0, 150, 255, 0.2);
+        }
+        
+        .sort-item {
+            padding: 12px 15px;
+            background: rgba(0, 30, 60, 0.3);
+            display: flex;
+            align-items: center;
+            cursor: move;
+            transition: all 0.3s;
+            position: relative;
+            border-bottom: 1px dashed rgba(0, 150, 255, 0.3);
+        }
+        
+        .sort-item:last-child {
+            border-bottom: none;
+        }
+        
+        .sort-item:hover {
+            background: rgba(0, 60, 100, 0.4);
+        }
+        
+        .sort-item.dragging {
+            opacity: 0.7;
+            border: 2px dashed #00c6ff;
+            background: rgba(0, 60, 100, 0.5);
+        }
+        
+        .sort-number {
+            width: 28px;
+            height: 28px;
+            background: linear-gradient(135deg, #00c6ff, #0072ff);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            font-size: 1rem;
+            font-weight: bold;
+            color: white;
+            box-shadow: 0 0 8px rgba(0, 198, 255, 0.5);
+        }
+        
+        .quiz-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .quiz-btn {
+            padding: 10px 20px;
+            font-size: 1rem;
+            background: linear-gradient(135deg, #00c6ff, #0072ff);
+            border: none;
+            border-radius: 50px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 114, 255, 0.5);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .quiz-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 114, 255, 0.7);
+        }
+        
+        .quiz-btn-secondary {
+            background: linear-gradient(135deg, #9c27b0, #673ab7);
+        }
+        
+        .quiz-feedback {
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: bold;
+            text-align: center;
+            font-size: 1.05rem;
+            display: none;
+        }
+        
+        .quiz-feedback.correct {
+            display: block;
+            color: #aed581;
+            background: rgba(174, 213, 129, 0.1);
+            border: 1px solid rgba(174, 213, 129, 0.3);
+        }
+        
+        .quiz-feedback.incorrect {
+            display: block;
+            color: #ff8a65;
+            background: rgba(255, 138, 101, 0.1);
+            border: 1px solid rgba(255, 138, 101, 0.3);
+        }
+        
+        .quiz-footnotes {
+            margin-top: 15px;
+            font-size: 0.85rem;
+            color: #81d4fa;
+            padding: 12px;
+            background: rgba(0, 20, 40, 0.3);
+            border-radius: 8px;
+        }
+        
+        .quiz-footnotes b {
+            color: #4fc3f7;
+        }
+        
+        /* 拓展阅读区域 */
+        .reading-section {
+            margin-top: 25px;
+            padding: 15px;
+            background: rgba(25, 35, 60, 0.7);
+            border-radius: 12px;
+            border: 1px solid rgba(78, 205, 196, 0.4);
+        }
+        
+        .reading-title {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: #ffcc80;
+            text-align: center;
+        }
+        
+        .reading-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .reading-item {
+            margin-bottom: 15px;
+            padding: 15px;
+            background: rgba(40, 55, 85, 0.6);
+            border-radius: 8px;
+            border-left: 4px solid #4ECDC4;
+            transition: all 0.3s;
+        }
+        
+        .reading-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+            background: rgba(50, 70, 110, 0.7);
+        }
+        
+        .reading-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+        
+        .reading-icon {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(78, 205, 196, 0.2);
+            border-radius: 50%;
+            font-size: 1.3rem;
+            color: #4ECDC4;
+        }
+        
+        .reading-link {
+            font-size: 1.15rem;
+            color: #a0d2eb;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        
+        .reading-link:hover {
+            color: #4ECDC4;
+            text-decoration: underline;
+        }
+        
+        .reading-meta {
+            padding-left: 48px;
+        }
+        
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 6px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        .meta-icon {
+            color: #4ECDC4;
+            width: 18px;
+            text-align: center;
+        }
+        
+        .meta-content {
+            flex: 1;
+            color: #b0bec5;
+        }
+        
+        /* 答题结束页面 */
+        .quiz-complete {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .quiz-score {
+            font-size: 2.5rem;
+            color: #ffcc80;
+            margin: 15px 0;
+            text-shadow: 0 0 8px rgba(255, 204, 128, 0.5);
+        }
+        
+        .quiz-message {
+            font-size: 1.2rem;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+        
+        .quiz-restart {
+            display: flex;
+            justify-content: center;
+            margin-top: 15px;
+        }
+        
+        /* 姓名弹窗 */
+        .name-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s;
+        }
+        
+        .name-modal.show {
+            opacity: 1;
+            pointer-events: all;
+        }
+        
+        .name-content {
+            background: linear-gradient(135deg, #0c1923, #1a2a3a);
+            width: 90%;
+            max-width: 500px;
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            border: 3px solid rgba(255, 215, 0, 0.5);
+            box-shadow: 0 0 50px rgba(0, 150, 255, 0.7);
+            position: relative;
+        }
+        
+        .name-title {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #4fc3f7;
+            text-shadow: 0 0 10px rgba(79, 195, 247, 0.5);
+        }
+        
+        .name-input {
+            width: 100%;
+            padding: 15px;
+            margin: 20px 0;
+            background: rgba(0, 40, 80, 0.5);
+            border: 2px solid rgba(0, 150, 255, 0.3);
+            border-radius: 10px;
+            color: white;
+            font-size: 1.1rem;
+            text-align: center;
+        }
+        
+        .name-input:focus {
+            outline: none;
+            border-color: #00c6ff;
+            box-shadow: 0 0 15px rgba(0, 198, 255, 0.5);
+        }
+        
+        /* 证书弹窗 */
+        .certificate-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s;
+        }
+        
+        .certificate-modal.show {
+            opacity: 1;
+            pointer-events: all;
+        }
+        
+        .certificate-content {
+            background: linear-gradient(135deg, #1a2a3a, #0c1923);
+            width: 90%;
+            max-width: 600px;
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            border: 4px double #ffcc80;
+            box-shadow: 0 0 50px rgba(0, 150, 255, 0.7);
+            position: relative;
+            transform: scale(0.8);
+            transition: transform 0.5s;
+            overflow: hidden;
+        }
+        
+        .certificate-modal.show .certificate-content {
+            transform: scale(1);
+        }
+        
+        /* 溶洞背景元素 */
+        .certificate-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.55;
+            pointer-events: none;
+        }
+        
+        .certificate-bg::before,
+        .certificate-bg::after {
+            content: "";
+            position: absolute;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M30,10 Q50,20 70,10 T90,20 Q80,40 90,60 T70,80 Q50,70 30,80 T10,60 Q20,40 10,20 T30,10 Z" fill="none" stroke="%23ffcc80" stroke-width="0.5"/></svg>');
+            background-size: 100px;
+            width: 100%;
+            height: 100%;
+            opacity: 0.3;
+        }
+        
+        .certificate-bg::before {
+            transform: rotate(15deg);
+        }
+        
+        .certificate-bg::after {
+            transform: rotate(-15deg);
+            opacity: 0.2;
+        }
+        
+        .certificate-title {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            color: #ffcc80;
+            text-shadow: 0 0 12px rgba(255, 204, 128, 0.7);
+            position: relative;
+            z-index: 2;
+        }
+        
+        .certificate-text {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            line-height: 1.7;
+            color: #ffffff;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .certificate-name {
+            font-size: 1.8rem;
+            color: #ffffff;
+            margin: 20px 0;
+            padding: 10px 0;
+            border-top: 2px dashed rgba(255, 204, 128, 0.5);
+            border-bottom: 2px dashed rgba(255, 204, 128, 0.5);
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+            position: relative;
+            z-index: 2;
+        }
+        
+        .certificate-id {
+            font-size: 0.95rem;
+            color: #ffffff;
+            margin: 15px 0;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .certificate-actions {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .certificate-btn {
+            padding: 10px 18px;
+            font-size: 1rem;
+            background: linear-gradient(135deg, #00c6ff, #0072ff);
+            border: none;
+            border-radius: 50px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            min-width: auto;
+            white-space: nowrap;
+        }
+        
+        .certificate-btn.share {
+            background: linear-gradient(135deg, #4caf50, #8bc34a);
+        }
+        
+        .certificate-btn.weibo {
+            background: linear-gradient(135deg, #e6162d, #a50c1c);
+        }
+        
+        .certificate-btn.learning {
+            background: linear-gradient(135deg, #9c27b0, #673ab7);
+        }
+        
+        .certificate-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* 居中打钩符号 */
+        .certificate-stamp {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 150px;
+            opacity: 0.4;
+            z-index: 1;
+        }
+        
+        /* 证书斜体文本 */
+        .certificate-italic {
+            font-style: italic;
+            display: block;
+            margin: 10px 0;
+            color: #ffffff;
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* 证书关闭按钮 */
+        .certificate-close {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(255, 204, 128, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 3;
+            transition: all 0.3s;
+        }
+        
+        .certificate-close:hover {
+            background: rgba(255, 204, 128, 0.4);
+            transform: rotate(90deg);
+        }
+        
+        .certificate-close::before,
+        .certificate-close::after {
+            content: "";
+            position: absolute;
+            width: 16px;
+            height: 2px;
+            background: #ffcc80;
+        }
+        
+        .certificate-close::before {
+            transform: rotate(45deg);
+        }
+        
+        .certificate-close::after {
+            transform: rotate(-45deg);
+        }
+        
+        .share-icons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .share-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #333;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .share-icon.wechat {
+            background: #2aae67;
+        }
+        
+        .share-icon.weibo {
+            background: #e6162d;
+        }
+        
+        .share-icon.learning {
+            background: #1a6ecc;
+        }
+        
+        .share-icon:hover {
+            transform: translateY(-5px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 装饰性矿物晶体 -->
+        <div class="crystal"></div>
+        <div class="crystal"></div>
+        <div class="crystal"></div>
+        
+        <header>
+            <div class="title-container">
+                <div class="title-glow"></div>
+                <h1><i class="fas fa-gem"></i> 溶洞探秘：喀斯特奇观</h1>
+            </div>
+            <p class="subtitle">探索石钟乳、石笋和石柱的奇妙形成过程。每一滴水都承载着数万年的地质故事。</p>
+        </header>
+        
+        <div class="game-area">
+            <!-- 左侧区域 -->
+            <div style="flex: 1; min-width: 300px; display: flex; flex-direction: column; gap: 30px;">
+                <!-- 洞穴动态演示区 -->
+                <div class="cave-container">
+                    <div class="cave-stalactite"></div>
+                    <canvas id="caveCanvas" width="500" height="500"></canvas>
+                    <div class="cave-stalagmite"></div>
+                    <div class="auto-drop-indicator">自动模式: <span id="auto-drop-status">开启</span></div>
+                    <div class="growth-indicator">生长速度: <span id="growth-rate">1.0x</span></div>
+                </div>
+                
+                <!-- 互动问答区 - 使用整合后的版本 -->
+                <div class="quiz-section">
+                    <h2 class="quiz-title"><i class="fas fa-graduation-cap"></i> 互动问答</h2>
+                    
+                    <div class="quiz-container">
+                        <div class="progress-container">
+                            <div class="progress-text">第 <span id="current-question">1</span> 题</div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="progress-fill" style="width: 20%"></div>
+                            </div>
+                            <div class="progress-text">共 5 题</div>
+                        </div>
+                        
+                        <div id="quiz-area"></div>
+                        <div id="quiz-feedback" class="quiz-feedback"></div>
+                        <div id="reading-section" class="reading-section"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 右侧信息区 -->
+            <div class="info-section">
+                <h2 class="info-title">喀斯特沉积物形成原理</h2>
+                
+                <div class="formation-selector">
+                    <button class="formation-btn active" data-target="stalactite-info">石钟乳</button>
+                    <button class="formation-btn" data-target="stalagmite-info">石笋</button>
+                    <button class="formation-btn" data-target="column-info">石柱</button>
+                </div>
+                
+                <div class="info-content">
+                    <!-- 石钟乳信息 -->
+                    <div class="formation-info active" id="stalactite-info">
+                        <h3><i class="fas fa-icicles"></i> 石钟乳</h3>
+                        <div class="formation-image">
+                            <i class="fas fa-icicles"></i>
+                        </div>
+                        <p class="formation-description"><span class="highlight">形成原理：</span> 含有溶解碳酸钙的水从洞穴顶部渗出时，由于二氧化碳逸出，碳酸钙沉淀形成石钟乳。</p>
+                        <p class="chem-formula">Ca(HCO₃)₂ → CaCO₃↓ + CO₂↑ + H₂O</p>
+                        <p class="time-scale">以广西凤山岩溶系统为例：当水滴速度达到<span class="highlight"><br /> 
+                        5滴/秒，</span>石钟乳直径增长量可达<span class="highlight">3毫米/年</span></p>
+                    </div>
+                    
+                    <!-- 石笋信息 -->
+                    <div class="formation-info" id="stalagmite-info">
+                        <h3><i class="fas fa-mountain"></i> 石笋</h3>
+                        <div class="formation-image">
+                            <i class="fas fa-mountain"></i>
+                        </div>
+                        <p class="formation-description"><span class="highlight">形成原理：</span> 从石钟乳滴落的水滴中含有碳酸钙，当水滴撞击地面时，二氧化碳进一步逸出，碳酸钙沉淀形成石笋。</p>
+                        <p class="chem-formula">Ca(HCO₃)₂ → CaCO₃↓ + CO₂↑ + H₂O</p>
+                        <p class="time-scale">石笋通常比上方的石钟乳更<span class="highlight">粗壮</span></p>
+                    </div>
+                    
+                    <!-- 石柱信息 -->
+                    <div class="formation-info" id="column-info">
+                        <h3><i class="fas fa-link"></i> 石柱</h3>
+                        <div class="formation-image">
+                            <div class="column-icon">
+                                <div class="pillar">
+                                    <div class="horizontal-texture"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="formation-description"><span class="highlight">形成原理：</span> 当石钟乳和石笋持续生长最终连接在一起时，就形成了石柱。石柱是喀斯特洞穴中最壮观的沉积形态之一。</p>
+                        <p class="chem-formula">CaCO₃ + H₂O + CO₂ ⇌ Ca(HCO₃)₂</p>
+                        <p class="formation-description">该反应可逆：CO₂浓度降低时向右沉淀，浓度升高时向左溶解。</p>
+                        <p class="time-scale">石柱（碳酸盐岩溶蚀型）完整发育周期通常需要<span class="highlight"><br />      
+                        5万-50万年</span></p>
+                    </div>
+                </div>
+                
+                <div class="controls">
+                    <button class="btn" id="add-water-btn">
+                        <i class="fas fa-tint"></i> 添加水滴
+                    </button>
+                    <button class="btn btn-secondary" id="reset-btn">
+                        <i class="fas fa-redo"></i> 重新开始
+                    </button>
+                </div>
+                
+                <div class="control-group">
+                    <div class="slider-container">
+                        <div class="slider-label">
+                            <span>水滴速度: <span id="speed-value">5</span></span>
+                            <span id="speed-impact">影响: 中</span>
+                        </div>
+                        <input type="range" id="speed-control" min="1" max="10" value="5">
+                        <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: #81d4fa;">
+                            <span>慢</span>
+                            <span>中</span>
+                            <span>快</span>
+                        </div>
+                    </div>
+                    
+                    <div class="slider-container">
+                        <div class="slider-label">
+                            <span>PH值: <span id="ph-value">7.0</span></span>
+                            <div id="ph-indicator" class="ph-indicator ph-7"></div>
+                        </div>
+                        <input type="range" id="ph-control" min="4" max="8" step="0.1" value="7.0">
+                        <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: #81d4fa;">
+                            <span>酸性 (4.0)</span>
+                            <span>中性 (7.0)</span>
+                            <span>碱性 (8.0)</span>
+                        </div>
+                        <div class="rate-indicator">
+                            <div class="rate-item">
+                                <div class="rate-bar">
+                                    <div class="rate-fill" id="slow-rate" style="height: 20%"></div>
+                                </div>
+                                <div class="rate-label">酸性环境</div>
+                            </div>
+                            <div class="rate-item">
+                                <div class="rate-bar">
+                                    <div class="rate-fill" id="medium-rate" style="height: 60%"></div>
+                                </div>
+                                <div class="rate-label">中性环境</div>
+                            </div>
+                            <div class="rate-item">
+                                <div class="rate-bar">
+                                    <div class="rate-fill" id="fast-rate" style="height: 100%"></div>
+                                </div>
+                                <div class="rate-label">碱性环境</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="ph-explanation">
+                        <h4><i class="fas fa-flask"></i> PH值影响机制</h4>
+                        
+                        <!-- 柱状图 -->
+                        <div class="ph-chart" id="ph-chart"></div>
+                        
+                        <p><span class="highlight">科学研究表明：</span>石钟乳和石笋的生长本质上是溶解与沉淀的动态竞争结果。</p>
+                        
+                        <p>• pH &lt; 6时，溶解速率显著超过沉淀速率，抑制生长；<br>
+                        <span class="chem-formula">CaCO₃ + 2H⁺ → Ca²⁺ + CO₂↑ + H₂O</span></p>
+                        
+                        <p>• pH ≈ 7~8.5时，碳酸钙倾向于稳定沉积，生长速度达峰值；<br>
+                        <span class="chem-formula">Ca²⁺ + CO₃²⁻ → CaCO₃↓</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="fun-facts">
+            <h4><i class="fas fa-lightbulb"></i> 喀斯特地貌趣味知识</h4>
+            <ul class="fact-list">
+                <li class="fact-item">
+                    <div class="fact-icon"><i class="fas fa-map-marked-alt"></i></div>
+                    <div class="fact-text">喀斯特一词的来源于前南斯拉夫"Kras"石灰岩高原地名，现为全球通用术语。</div>
+                </li>
+                <li class="fact-item">
+                    <div class="fact-icon"><i class="fas fa-hand-paper"></i></div>
+                    <div class="fact-text">触摸石钟乳或石笋会阻碍矿物沉积并留下油脂，导致生长停滞，许多溶洞禁止触摸。</div>
+                </li>
+                <li class="fact-item">
+                    <div class="fact-icon"><i class="fas fa-landmark"></i></div>
+                    <div class="fact-text">广西桂林七星岩是典型的喀斯特溶洞，拥有大量石柱景观。</div>
+                </li>
+                <li class="fact-item">
+                    <div class="fact-icon"><i class="fas fa-mountain"></i></div>
+                    <div class="fact-text">广西乐业天坑群是世界上最壮观的天坑群之一，深度达600多米。</div>
+                </li>
+                <li class="fact-item">
+                    <div class="fact-icon"><i class="fas fa-trophy"></i></div>
+                    <div class="fact-text">马来西亚的姆鲁山洞穴系统拥有世界上最高的石柱（约50米）。</div>
+                </li>
+            </ul>
+        </div>
+        
+        <!-- 工具提示 -->
+        <div class="tooltip" id="tooltip"></div>
+    </div>
+    
+    <!-- 姓名弹窗 -->
+    <div class="name-modal" id="name-modal">
+        <div class="name-content">
+            <h2 class="name-title">请输入您的姓名</h2>
+            <input type="text" id="user-name" class="name-input" placeholder="请输入您的姓名" maxlength="20">
+            <button class="quiz-btn" id="confirm-name" style="display: block; margin: 20px auto 0;">
+                <i class="fas fa-check"></i> 生成证书
+            </button>
+        </div>
+    </div>
+
+    <!-- 证书弹窗 -->
+    <div class="certificate-modal" id="certificate-modal">
+        <div class="certificate-content">
+            <!-- 背景图案 -->
+            <div class="certificate-bg"></div>
+            
+            <!-- 关闭按钮 -->
+            <div class="certificate-close" id="certificate-close"></div>
+            
+            <h2 class="certificate-title">溶洞守护者电子证书</h2>
+            <div class="certificate-text">授予：</div>
+            <div class="certificate-name" id="certificate-name">探险者</div>
+            <div class="certificate-text">在溶洞探秘：喀斯特奇观互动问答中</div>
+            <div class="certificate-text">成功完成所有问题挑战</div>
+            
+            <!-- 斜体文字 -->
+            <em class="certificate-italic">恭喜您成为喀斯特地质探秘专家！</em>
+            
+            <div class="certificate-id">证书编号：<span id="certificate-id">GS2025xxxxxxxx</span></div>
+            
+            <div class="certificate-actions">
+                <button class="certificate-btn" id="download-certificate">
+                    <i class="fas fa-download"></i> 下载证书
+                </button>
+                <button class="certificate-btn share" id="share-certificate">
+                    <i class="fas fa-share-alt"></i> 分享成就
+                </button>
+            </div>
+            
+            <div class="share-icons" id="share-icons" style="display: none;">
+                <div class="share-icon wechat">
+                    <i class="fab fa-weixin"></i>
+                </div>
+                <div class="share-icon weibo">
+                    <i class="fab fa-weibo"></i>
+                </div>
+                <div class="share-icon learning">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+            </div>
+            
+            <img src="data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 24 24'%3E%3Cpath fill='%23ffcc80' d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z'/%3E%3C/svg%3E" 
+                 alt="认证印章" class="certificate-stamp">
+        </div>
+    </div>
+
+    <script>
+        // ================= 洞穴模拟部分 =================
+        // 游戏状态
+        const gameState = {
+            stalactiteHeight: 70,
+            stalagmiteHeight: 50,
+            dropSpeed: 5,
+            phValue: 7.0,
+            columnFormed: false,
+            drops: [],
+            deposits: [],
+            decorations: [],
+            animationId: null,
+            autoDropEnabled: true,
+            autoDropInterval: null,
+            depositAccumulator: 0,
+            columnFormedTime: null,
+            lastDepositTime: 0,
+            growthRate: 1.0,
+            columnHighlight: false
+        };
+        
+        // 工具提示元素
+        const tooltip = document.getElementById('tooltip');
+        const canvas = document.getElementById('caveCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        // 调整Canvas大小以适应容器
+        function resizeCanvas() {
+            const container = canvas.parentElement;
+            canvas.width = container.clientWidth;
+            canvas.height = container.clientHeight;
+            drawScene();
+        }
+        
+        // 初始化洞穴装饰
+        function initDecorations() {
+            gameState.decorations = [];
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            for (let i = 0; i < 8; i++) {
+                const leftPos = 0.2 + Math.random() * 0.6;
+                
+                const stalactite = {
+                    type: 'stalactite',
+                    x: width * leftPos,
+                    y: 0,
+                    width: 8 + Math.random() * 7,
+                    height: 30 + Math.random() * 40,
+                    tooltip: "石钟乳：从洞穴顶部向下生长的碳酸钙沉积物"
+                };
+                gameState.decorations.push(stalactite);
+                
+                const stalagmite = {
+                    type: 'stalagmite',
+                    x: width * (leftPos + Math.random() * 0.04 - 0.02),
+                    y: height,
+                    width: 10 + Math.random() * 8,
+                    height: 25 + Math.random() * 35,
+                    tooltip: "石笋：从洞穴底部向上生长的碳酸钙沉积物"
+                };
+                gameState.decorations.push(stalagmite);
+            }
+        }
+        
+        // 绘制场景
+        function drawScene() {
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            ctx.clearRect(0, 0, width, height);
+            
+            ctx.fillStyle = '#0a1520';
+            ctx.fillRect(0, 0, width, height);
+            
+            ctx.fillStyle = '#1a2432';
+            ctx.beginPath();
+            ctx.moveTo(0, 0);
+            ctx.lineTo(width, 0);
+            ctx.lineTo(width, height * 0.5);
+            ctx.lineTo(0, height * 0.5);
+            ctx.closePath();
+            ctx.fill();
+            
+            ctx.fillStyle = '#1a2432';
+            ctx.beginPath();
+            ctx.moveTo(0, height * 0.5);
+            ctx.lineTo(width, height * 0.5);
+            ctx.lineTo(width, height);
+            ctx.lineTo(0, height);
+            ctx.closePath();
+            ctx.fill();
+            
+            ctx.fillStyle = 'rgba(41, 182, 246, 0.3)';
+            ctx.beginPath();
+            ctx.arc(width * 0.5, 20, 40, 0, Math.PI, true);
+            ctx.closePath();
+            ctx.fill();
+            
+            gameState.decorations.forEach(decoration => {
+                if (decoration.type === 'stalactite') {
+                    ctx.fillStyle = '#a1887f';
+                    ctx.beginPath();
+                    ctx.moveTo(decoration.x, decoration.y + decoration.height);
+                    ctx.lineTo(decoration.x - decoration.width/2, decoration.y);
+                    ctx.lineTo(decoration.x + decoration.width/2, decoration.y);
+                    ctx.closePath();
+                    ctx.fill();
+                } else if (decoration.type === 'stalagmite') {
+                    ctx.fillStyle = '#a1887f';
+                    ctx.beginPath();
+                    ctx.moveTo(decoration.x, decoration.y - decoration.height);
+                    ctx.lineTo(decoration.x - decoration.width/2, decoration.y);
+                    ctx.lineTo(decoration.x + decoration.width/2, decoration.y);
+                    ctx.closePath();
+                    ctx.fill();
+                }
+            });
+            
+            ctx.fillStyle = gameState.columnFormed ? '#7e6259' : '#8d6e63';
+            ctx.beginPath();
+            ctx.moveTo(width * 0.5, gameState.stalactiteHeight); 
+            ctx.lineTo(width * 0.5 - 30, 0);
+            ctx.lineTo(width * 0.5 + 30, 0);
+            ctx.closePath();
+            ctx.fill();
+            
+            ctx.fillStyle = gameState.columnFormed ? '#7e6259' : '#8d6e63';
+            ctx.beginPath();
+            ctx.moveTo(width * 0.5, height - gameState.stalagmiteHeight);
+            ctx.lineTo(width * 0.5 - 35, height);
+            ctx.lineTo(width * 0.5 + 35, height);
+            ctx.closePath();
+            ctx.fill();
+            
+            if (gameState.columnFormed) {
+                const columnHeight = height - gameState.stalagmiteHeight - gameState.stalactiteHeight;
+                
+                ctx.fillStyle = '#7e6259';
+                ctx.beginPath();
+                ctx.moveTo(width * 0.5 - 25, gameState.stalactiteHeight);
+                ctx.lineTo(width * 0.5 - 30, gameState.stalactiteHeight + columnHeight * 0.3);
+                ctx.lineTo(width * 0.5 - 22, gameState.stalactiteHeight + columnHeight * 0.5);
+                ctx.lineTo(width * 0.5 - 30, gameState.stalactiteHeight + columnHeight * 0.7);
+                ctx.lineTo(width * 0.5 - 25, height - gameState.stalagmiteHeight);
+                ctx.lineTo(width * 0.5 + 25, height - gameState.stalagmiteHeight);
+                ctx.lineTo(width * 0.5 + 30, gameState.stalactiteHeight + columnHeight * 0.7);
+                ctx.lineTo(width * 0.5 + 22, gameState.stalactiteHeight + columnHeight * 0.5);
+                ctx.lineTo(width * 0.5 + 30, gameState.stalactiteHeight + columnHeight * 0.3);
+                ctx.lineTo(width * 0.5 + 25, gameState.stalactiteHeight);
+                ctx.closePath();
+                ctx.fill();
+                
+                ctx.strokeStyle = 'rgba(0, 0, 0, 0.1)';
+                ctx.lineWidth = 1;
+                for (let i = 0; i < 10; i++) {
+                    const yPos = gameState.stalactiteHeight + columnHeight * (i/10);
+                    ctx.beginPath();
+                    ctx.moveTo(width * 0.5 - 25, yPos);
+                    ctx.lineTo(width * 0.5 + 25, yPos);
+                    ctx.stroke();
+                }
+                
+                if (gameState.columnHighlight) {
+                    ctx.strokeStyle = 'rgba(255, 215, 0, 0.8)';
+                    ctx.lineWidth = 3;
+                    ctx.stroke();
+                }
+            }
+            
+            gameState.deposits.forEach((deposit, index) => {
+                ctx.fillStyle = deposit.color;
+                ctx.beginPath();
+                ctx.arc(deposit.x, deposit.y, deposit.radius, 0, Math.PI * 2);
+                ctx.fill();
+                
+                deposit.radius *= 0.95;
+                deposit.alpha *= 0.92;
+                
+                if (deposit.radius < 0.5 || deposit.alpha < 0.05) {
+                    gameState.deposits.splice(index, 1);
+                }
+            });
+            
+            gameState.drops.forEach(drop => {
+                ctx.fillStyle = drop.color;
+                ctx.beginPath();
+                ctx.arc(drop.x, drop.y, drop.radius, 0, Math.PI * 2);
+                ctx.fill();
+                
+                ctx.fillStyle = `rgba(41, 182, 246, ${drop.glowAlpha})`;
+                ctx.beginPath();
+                ctx.arc(drop.x, drop.y, drop.radius * 1.8, 0, Math.PI * 2);
+                ctx.fill();
+                
+                if (drop.speed > 3) {
+                    ctx.fillStyle = `rgba(41, 182, 246, ${drop.glowAlpha * 0.6})`;
+                    ctx.beginPath();
+                    ctx.arc(drop.x, drop.y - 5, drop.radius * 0.7, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            });
+        }
+        
+        // 添加水滴
+        function addWaterDrop() {
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            const drop = {
+                x: width * 0.5,
+                y: gameState.stalactiteHeight,
+                radius: 3 + Math.random() * 2,
+                speed: gameState.dropSpeed,
+                shrinking: false,
+                color: '#29b6f6',
+                glowAlpha: 0.4
+            };
+            
+            gameState.drops.push(drop);
+        }
+        
+        // 自动添加水滴
+        function autoAddWaterDrop() {
+            if (gameState.autoDropEnabled) {
+                addWaterDrop();
+            }
+        }
+        
+        // 添加沉积效果
+        function addDepositEffect(x, y, amount) {
+            const color = gameState.phValue > 7.5 ? '#aed581' : 
+                         gameState.phValue < 6.0 ? '#ff8a65' : '#81d4fa';
+            
+            for (let i = 0; i < Math.max(3, Math.floor(amount * 3)); i++) {
+                gameState.deposits.push({
+                    x: x + (Math.random() * 20 - 10),
+                    y: y + (Math.random() * 10 - 5),
+                    radius: 2 + Math.random() * 3 * amount,
+                    color: color,
+                    alpha: 0.8,
+                    vx: (Math.random() - 0.5) * 2,
+                    vy: -Math.random() * 2
+                });
+            }
+        }
+        
+        // 计算生长速率
+        function calculateGrowthRate() {
+            let rate = 1.0;
+            rate *= (gameState.dropSpeed / 5);
+            
+            if (gameState.phValue < 6.0) {
+                rate *= 0.5;
+            } else if (gameState.phValue > 7.5) {
+                rate *= 1.5;
+            }
+            
+            document.getElementById('growth-rate').textContent = rate.toFixed(1) + 'x';
+            return rate;
+        }
+        
+        // 更新游戏状态
+        function updateGame() {
+            const height = canvas.height;
+            const width = canvas.width;
+            let needRedraw = false;
+            const currentTime = Date.now();
+            
+            gameState.growthRate = calculateGrowthRate();
+            
+            gameState.drops.forEach((drop, index) => {
+                if (drop.shrinking) {
+                    drop.radius *= 0.92;
+                    drop.glowAlpha *= 0.9;
+                    
+                    if (drop.radius < 0.5) {
+                        gameState.drops.splice(index, 1);
+                        depositMinerals(drop.x, drop.y);
+                        needRedraw = true;
+                    } else {
+                        needRedraw = true;
+                    }
+                } else {
+                    drop.y += drop.speed;
+                    
+                    if (drop.y >= height - gameState.stalagmiteHeight) {
+                        drop.shrinking = true;
+                        drop.color = '#ff8a65';
+                    }
+                    needRedraw = true;
+                }
+            });
+            
+            gameState.deposits.forEach(deposit => {
+                deposit.x += deposit.vx;
+                deposit.y += deposit.vy;
+                deposit.vy += 0.05;
+            });
+            
+            if (gameState.columnFormed && gameState.autoDropEnabled) {
+                if (currentTime - gameState.columnFormedTime > 5000) {
+                    gameState.autoDropEnabled = false;
+                    document.getElementById('auto-drop-status').textContent = '停止';
+                    if (gameState.autoDropInterval) {
+                        clearInterval(gameState.autoDropInterval);
+                        gameState.autoDropInterval = null;
+                    }
+                }
+            }
+            
+            if (needRedraw || gameState.deposits.length > 0) {
+                drawScene();
+            }
+            
+            gameState.animationId = requestAnimationFrame(updateGame);
+        }
+        
+        // 沉积矿物质
+        function depositMinerals(x, y) {
+            let depositAmount = 1;
+            
+            if (gameState.phValue < 6.0) {
+                depositAmount = 0.3;
+            } else if (gameState.phValue < 7.0) {
+                depositAmount = 0.7;
+            } else if (gameState.phValue > 7.5) {
+                depositAmount = 1.5;
+            }
+            
+            depositAmount *= gameState.growthRate;
+            addDepositEffect(x, y, depositAmount);
+            
+            gameState.depositAccumulator += depositAmount;
+            
+            if (gameState.depositAccumulator >= 5) {
+                gameState.stalactiteHeight += 3 * gameState.growthRate;
+                gameState.stalagmiteHeight += 4 * gameState.growthRate;
+                
+                const canvasHeight = canvas.height;
+                if (canvasHeight - gameState.stalagmiteHeight <= gameState.stalactiteHeight + 10 && !gameState.columnFormed) {
+                    formColumn();
+                }
+                
+                gameState.depositAccumulator = 0;
+                gameState.lastDepositTime = Date.now();
+            }
+        }
+        
+        // 形成石柱
+        function formColumn() {
+            gameState.columnFormed = true;
+            gameState.columnFormedTime = Date.now();
+            gameState.columnHighlight = true;
+            
+            document.querySelectorAll('.formation-info').forEach(info => {
+                info.classList.remove('active');
+            });
+            document.getElementById('column-info').classList.add('active');
+            
+            document.querySelectorAll('.formation-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector('.formation-btn[data-target="column-info"]').classList.add('active');
+            
+            setTimeout(() => {
+                gameState.columnHighlight = false;
+                drawScene();
+            }, 5000);
+        }
+        
+        // 更新水滴速度
+        function updateSpeed() {
+            const speed = parseInt(document.getElementById('speed-control').value);
+            gameState.dropSpeed = speed;
+            document.getElementById('speed-value').textContent = speed;
+            
+            let impactText = "中";
+            if (speed < 3) impactText = "慢";
+            else if (speed > 7) impactText = "快";
+            document.getElementById('speed-impact').textContent = `影响: ${impactText}`;
+            
+            gameState.drops.forEach(drop => {
+                if (!drop.shrinking) {
+                    drop.speed = gameState.dropSpeed;
+                }
+            });
+            
+            calculateGrowthRate();
+        }
+        
+        // 更新PH值
+        function updatePH() {
+            const ph = parseFloat(document.getElementById('ph-control').value);
+            gameState.phValue = ph;
+            document.getElementById('ph-value').textContent = ph.toFixed(1);
+            
+            const phIndicator = document.getElementById('ph-indicator');
+            phIndicator.className = 'ph-indicator';
+            if (ph < 5.0) {
+                phIndicator.classList.add('ph-4');
+            } else if (ph < 6.0) {
+                phIndicator.classList.add('ph-5');
+            } else if (ph < 7.0) {
+                phIndicator.classList.add('ph-6');
+            } else if (ph < 7.5) {
+                phIndicator.classList.add('ph-7');
+            } else {
+                phIndicator.classList.add('ph-8');
+            }
+            
+            let slowHeight = 20;
+            let medHeight = 60;
+            let fastHeight = 100;
+            
+            if (ph < 5.0) {
+                slowHeight = 100;
+                medHeight = 40;
+                fastHeight = 20;
+            } else if (ph < 6.0) {
+                slowHeight = 70;
+                medHeight = 100;
+                fastHeight = 40;
+            } else if (ph < 7.0) {
+                slowHeight = 40;
+                medHeight = 70;
+                fastHeight = 100;
+            } else if (ph < 7.5) {
+                slowHeight = 20;
+                medHeight = 60;
+                fastHeight = 100;
+            } else {
+                slowHeight = 10;
+                medHeight = 30;
+                fastHeight = 100;
+            }
+            
+            document.getElementById('slow-rate').style.height = slowHeight + '%';
+            document.getElementById('medium-rate').style.height = medHeight + '%';
+            document.getElementById('fast-rate').style.height = fastHeight + '%';
+            
+            calculateGrowthRate();
+            updatePHChart();
+        }
+        
+        // 更新PH图表
+        function updatePHChart() {
+            const chart = document.getElementById('ph-chart');
+            chart.innerHTML = '';
+            
+            const phValues = [4, 5, 6, 7, 8];
+            const growthRates = {
+                4: 0.2,
+                5: 0.5,
+                6: 0.8,
+                7: 1.0,
+                8: 1.4
+            };
+            
+            const baseHeight = 80;
+            
+            phValues.forEach(ph => {
+                const bar = document.createElement('div');
+                bar.className = 'ph-bar';
+                
+                let height = growthRates[ph] * baseHeight;
+                bar.style.height = `${height}px`;
+                
+                if (Math.floor(gameState.phValue) === ph) {
+                    bar.style.background = 'linear-gradient(to top, #ffcc80, #ff9800)';
+                }
+                
+                const label = document.createElement('div');
+                label.className = 'ph-bar-label';
+                label.textContent = `pH ${ph}`;
+                bar.appendChild(label);
+                
+                const value = document.createElement('div');
+                value.className = 'ph-bar-value';
+                value.textContent = `${growthRates[ph]}x`;
+                bar.appendChild(value);
+                
+                chart.appendChild(bar);
+            });
+        }
+        
+        // 重置洞穴
+        function resetCave() {
+            gameState.stalactiteHeight = 70;
+            gameState.stalagmiteHeight = 50;
+            gameState.columnFormed = false;
+            gameState.drops = [];
+            gameState.deposits = [];
+            gameState.depositAccumulator = 0;
+            gameState.autoDropEnabled = true;
+            document.getElementById('auto-drop-status').textContent = '开启';
+            gameState.columnHighlight = false;
+            
+            initDecorations();
+            drawScene();
+            
+            document.querySelectorAll('.formation-info').forEach(info => {
+                info.classList.remove('active');
+            });
+            document.getElementById('stalactite-info').classList.add('active');
+            
+            document.querySelectorAll('.formation-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector('.formation-btn[data-target="stalactite-info"]').classList.add('active');
+            
+            if (gameState.autoDropInterval) {
+                clearInterval(gameState.autoDropInterval);
+            }
+            gameState.autoDropInterval = setInterval(autoAddWaterDrop, 1000);
+            
+            document.getElementById('speed-control').value = 5;
+            document.getElementById('ph-control').value = 7.0;
+            updateSpeed();
+            updatePH();
+        }
+        
+        // 工具提示功能
+        function setupTooltips() {
+            canvas.addEventListener('mousemove', function(e) {
+                const rect = canvas.getBoundingClientRect();
+                const mouseX = e.clientX - rect.left;
+                const mouseY = e.clientY - rect.top;
+                const width = canvas.width;
+                const height = canvas.height;
+                
+                let tooltipText = "";
+                
+                const maxX = width - 250;
+                const maxY = height - 100;
+                
+                let tooltipX = Math.min(mouseX + 15, maxX);
+                let tooltipY = Math.min(mouseY + 15, maxY);
+                
+                if (gameState.columnFormed) {
+                    const columnLeft = width * 0.5 - 30;
+                    const columnRight = width * 0.5 + 30;
+                    
+                    if (mouseX >= columnLeft && mouseX <= columnRight && 
+                        mouseY >= 0 && mouseY <= height) {
+                        tooltipText = "石柱：由石钟乳和石笋连接形成的碳酸钙沉积柱。当两者生长至连接时，形成稳固的柱状结构，是喀斯特洞穴中最壮观的沉积形态之一。";
+                    }
+                } else {
+                    if (mouseX >= width * 0.5 - 30 && mouseX <= width * 0.5 + 30 &&
+                        mouseY >= 0 && mouseY <= gameState.stalactiteHeight) {
+                        tooltipText = "石钟乳：从洞穴顶部向下生长的碳酸钙沉积物。形成原理：含碳酸钙的水滴从洞顶渗出，CO₂逸出导致CaCO₃沉淀。";
+                    }
+                    else if (mouseX >= width * 0.5 - 35 && mouseX <= width * 0.5 + 35 &&
+                             mouseY >= height - gameState.stalagmiteHeight && mouseY <= height) {
+                        tooltipText = "石笋：从洞穴底部向上生长的碳酸钙沉积物。形成原理：从石钟乳滴落的水滴撞击地面，CO₂进一步逸出导致CaCO₃沉淀。";
+                    }
+                    
+                    gameState.decorations.forEach(decoration => {
+                        if (decoration.type === 'stalactite') {
+                            const minX = decoration.x - decoration.width/2;
+                            const maxX = decoration.x + decoration.width/2;
+                            const minY = decoration.y;
+                            const maxY = decoration.y + decoration.height;
+                            
+                            if (mouseX >= minX && mouseX <= maxX &&
+                                mouseY >= minY && mouseY <= maxY) {
+                                tooltipText = decoration.tooltip;
+                            }
+                        } else if (decoration.type === 'stalagmite') {
+                            const minX = decoration.x - decoration.width/2;
+                            const maxX = decoration.x + decoration.width/2;
+                            const minY = decoration.y - decoration.height;
+                            const maxY = decoration.y;
+                            
+                            if (mouseX >= minX && mouseX <= maxX &&
+                                mouseY >= minY && mouseY <= maxY) {
+                                tooltipText = decoration.tooltip;
+                            }
+                        }
+                    });
+                }
+                
+                if (tooltipText) {
+                    tooltip.textContent = tooltipText;
+                    tooltip.style.opacity = '1';
+                    tooltip.style.left = tooltipX + 'px';
+                    tooltip.style.top = tooltipY + 'px';
+                } else {
+                    tooltip.style.opacity = '0';
+                }
+            });
+            
+            canvas.addEventListener('mouseout', function() {
+                tooltip.style.opacity = '0';
+            });
+        }
+        
+        // ================= 互动问答区逻辑 =================
+        // 问答区逻辑
+        const quizData = [
+            { 
+                type: "single",
+                q: "广西喀斯特地貌的主要成因是什么？", 
+                options: ["河流侵蚀", "溶蚀作用", "风化作用", "火山喷发"], 
+                correct: [1], 
+                explanation: "喀斯特地貌主要由可溶性岩石（如石灰岩）在水的化学溶蚀作用下形成。"
+            },
+            { 
+                type: "tf",
+                q: "石钟乳和石笋最终可能会连接形成石柱。", 
+                options: ["对", "错"], 
+                correct: [0], 
+                explanation: "石钟乳自上而下生长，石笋自下而上生长，二者在长时间沉积后可能相连形成石柱。"
+            },
+            { 
+                type: "multi",
+                q: "下列哪些属于广西喀斯特地貌的典型形态？", 
+                options: ["峰丛洼地", "冰川峡谷", "地下溶洞", "雅丹地貌"], 
+                correct: [0,2], 
+                explanation: "桂林龙胜的峰丛与洼地组合，河池都安的百魔洞地下河贯穿其中，洞内石笋群如林立宝塔，都是广西喀斯特地貌的典型形态。冰川地貌与雅丹地貌属其他地质作用产物。"
+            },
+            { 
+                type: "tf",
+                q: "酸性水环境有利于石钟乳的快速生长。", 
+                options: ["对", "错"], 
+                correct: [1], 
+                explanation: "酸性环境会加快碳酸钙的溶解，不利于沉积物形成，因此不利于石钟乳生长。"
+            },
+            { 
+                type: "sort",
+                q: "请将石钟乳的形成过程按正确顺序排列：", 
+                items: [
+                    "水滴中的二氧化碳逸出",
+                    "含有碳酸氢钙的水从洞顶渗出",
+                    "碳酸钙沉积",
+                    "形成石钟乳"
+                ],
+                correct: [1, 0, 2, 3], 
+                explanation: "石钟乳形成过程：1. 含有碳酸氢钙的水从洞顶渗出；2. 水滴中的二氧化碳逸出；3. 碳酸钙沉积；4. 经过长时间积累形成石钟乳。"
+            }
+        ];
+        
+        // 拓展阅读资料 - 更新了第一个条目
+        const readingMaterials = [
+            {
+                title: "粤西游日记",
+                url: "https://dushu.baidu.com/pc/reader?gid=4355207885&cid=1568284246",
+                meta: [
+                    {icon: "fa-user-pen", text: "徐霞客（明代地理学家）"},
+                    {icon: "fa-book", text: "《徐霞客游记》"},
+                    {icon: "fa-calendar", text: "公元1637年，“古代旅行博主”徐霞客游历广西各地。"}
+                ],
+                icon: "fa-book"
+            },
+            {
+                title: "广西喀斯特天坑资源及其旅游开发研究",
+                url: "https://kns.cnki.net/kcms2/article/abstract?v=wOuTVkq58NkC3-ALbUbYn2hwNi_ZhtpgU3bqhBTyszJ3W8aTo3aHEzj5LMm-o0xOxN-f_8JfFOgvboczFjT2gEtWLDGz3hX1dMuGOqPF9QJQerIP9Kputh7DNKa9O6JcSk0DF0-9l_stABpReEiv32qFOvyB6HcxIq28OMUYsbo=&uniplatform=NZKPT",
+                meta: [
+                    {icon: "fa-user-pen", text: "谷睿, 唐健民, 韦霄等"},
+                    {icon: "fa-book", text: "《广西科学》"},
+                    {icon: "fa-calendar", text: "2021年"}
+                ],
+                icon: "fa-map-marked-alt"
+            },
+            {
+                title: "典型喀斯特山区社会-生态系统演变及效应研究——以广西为例",
+                url: "https://kns.cnki.net/kcms2/article/abstract?v=wOuTVkq58NlWORKMwCpsN7zmA3_QzZFOnIG1O3EQzDYtoMHWZaLbo94zXtLdpWtDiYSuLYWS0k__LVKE57CNv-y2EsvMS-LR8LakULtiaX_7QLXso-JSraRXEHtyFjkxHrAk3bzRezUAA250xXZrWhtrIG0jqNVav0zEkzWUE1Q=&uniplatform=NZKPT",
+                meta: [
+                    {icon: "fa-user-pen", text: "龚妮, 赵宇鸾"},
+                    {icon: "fa-book", text: "Journal of Resources and Ecology"},
+                    {icon: "fa-calendar", text: "2024年"}
+                ],
+                icon: "fa-seedling"
+            }
+        ];
+        
+        let currentQ = 0;
+        let score = 0;
+        let sortedItems = [];
+        const totalQuestions = quizData.length;
+        let userName = "探险者";
+        let certId = "";
+        
+        function updateProgress() {
+            const progress = ((currentQ + 1) / totalQuestions) * 100;
+            document.getElementById('progress-fill').style.width = progress + '%';
+            document.getElementById('current-question').textContent = currentQ + 1;
+        }
+        
+        function getTypeLabel(type) {
+            const labels = {
+                "single": "单选题",
+                "multi": "多选题",
+                "tf": "判断题",
+                "sort": "排序题"
+            };
+            return labels[type] || "题目";
+        }
+        
+        function getTypeClass(type) {
+            const classes = {
+                "single": "type-single",
+                "multi": "type-multi",
+                "tf": "type-tf",
+                "sort": "type-sort"
+            };
+            return classes[type] || "";
+        }
+        
+        function loadQuestion() {
+            const container = document.getElementById('quiz-area');
+            const readingSection = document.getElementById('reading-section');
+            const qData = quizData[currentQ];
+            
+            // 清空拓展阅读区域
+            readingSection.innerHTML = '';
+            
+            let html = `
+                <div class="${getTypeClass(qData.type)} question-type">${getTypeLabel(qData.type)}</div>
+                <div class="quiz-question">${qData.q}</div>
+            `;
+            
+            // 排序题
+            if (qData.type === "sort") {
+                html += `
+                    <div class="sort-container" id="sort-container">
+                `;
+                
+                // 初始化排序数组
+                sortedItems = [...qData.items];
+                
+                sortedItems.forEach((item, i) => {
+                    html += `
+                        <div class="sort-item" data-index="${i}">
+                            <div class="sort-number">${i+1}</div>
+                            <div class="sort-text">${item}</div>
+                        </div>
+                    `;
+                });
+                
+                html += `</div>`;
+            } else {
+                // 普通选择题
+                html += `<div class="quiz-options">`;
+                
+                qData.options.forEach((opt, i) => {
+                    html += `
+                        <div class="quiz-option">
+                            <input type="${qData.correct.length > 1 ? 'checkbox' : 'radio'}" name="quiz-option" value="${i}" id="option-${i}">
+                            <label for="option-${i}">${opt}</label>
+                        </div>
+                    `;
+                });
+                
+                html += `</div>`;
+            }
+            
+            html += `
+                <div class="quiz-buttons">
+                    <button class="quiz-btn" id="submit-answer">
+                        <i class="fas fa-paper-plane"></i> 提交答案
+                    </button>
+                    <button class="quiz-btn quiz-btn-secondary" id="reset-sort" style="${qData.type === 'sort' ? '' : 'display: none'}">
+                        <i class="fas fa-redo"></i> 重置排序
+                    </button>
+                </div>
+            `;
+            
+            container.innerHTML = html;
+            document.getElementById('quiz-feedback').className = 'quiz-feedback';
+            document.getElementById('submit-answer').addEventListener('click', submitAnswer);
+            
+            // 排序题重置按钮
+            if (qData.type === "sort") {
+                document.getElementById('reset-sort').addEventListener('click', resetSort);
+                makeSortable();
+            }
+            
+            updateProgress();
+        }
+        
+        // 使排序题可拖动
+        function makeSortable() {
+            const container = document.getElementById('sort-container');
+            if (!container) return;
+            
+            let draggedItem = null;
+            
+            container.querySelectorAll('.sort-item').forEach(item => {
+                item.setAttribute('draggable', true);
+                
+                item.addEventListener('dragstart', function() {
+                    draggedItem = this;
+                    this.classList.add('dragging');
+                    setTimeout(() => this.style.opacity = '0.7', 0);
+                });
+                
+                item.addEventListener('dragend', function() {
+                    setTimeout(() => {
+                        this.style.opacity = '1';
+                        this.classList.remove('dragging');
+                        draggedItem = null;
+                        updateSortNumbers();
+                    }, 0);
+                });
+                
+                item.addEventListener('dragover', function(e) {
+                    e.preventDefault();
+                    this.style.border = '2px dashed #00c6ff';
+                });
+                
+                item.addEventListener('dragleave', function() {
+                    this.style.border = 'none';
+                    this.style.borderBottom = '1px dashed rgba(0, 150, 255, 0.3)';
+                });
+                
+                item.addEventListener('drop', function(e) {
+                    e.preventDefault();
+                    this.style.border = 'none';
+                    this.style.borderBottom = '1px dashed rgba(0, 150, 255, 0.3)';
+                    if (draggedItem !== this) {
+                        const allItems = Array.from(container.children);
+                        const draggedIndex = allItems.indexOf(draggedItem);
+                        const targetIndex = allItems.indexOf(this);
+                        
+                        if (draggedIndex < targetIndex) {
+                            container.insertBefore(draggedItem, this.nextSibling);
+                        } else {
+                            container.insertBefore(draggedItem, this);
+                        }
+                        
+                        // 更新排序数组
+                        const newItems = Array.from(container.children).map(el => 
+                            sortedItems[parseInt(el.getAttribute('data-index'))]
+                        );
+                        sortedItems = newItems;
+                        
+                        updateSortNumbers();
+                    }
+                });
+            });
+        }
+        
+        // 更新排序题序号
+        function updateSortNumbers() {
+            const container = document.getElementById('sort-container');
+            if (!container) return;
+            
+            const items = container.querySelectorAll('.sort-item');
+            items.forEach((item, index) => {
+                const numberElement = item.querySelector('.sort-number');
+                if (numberElement) {
+                    numberElement.textContent = index + 1;
+                    // 更新数据索引
+                    item.setAttribute('data-index', index);
+                }
+            });
+        }
+        
+        // 重置排序
+        function resetSort() {
+            const qData = quizData[currentQ];
+            sortedItems = [...qData.items];
+            loadQuestion();
+        }
+        
+        function submitAnswer() {
+            const qData = quizData[currentQ];
+            let isCorrect = false;
+            
+            if (qData.type === "sort") {
+                // 检查排序是否正确
+                const userOrder = sortedItems;
+                const correctOrder = qData.correct.map(index => qData.items[index]);
+                isCorrect = userOrder.every((item, i) => item === correctOrder[i]);
+            } else {
+                // 选择题
+                const selected = Array.from(document.querySelectorAll('input[name="quiz-option"]:checked'))
+                    .map(i => parseInt(i.value));
+                
+                isCorrect = selected.length === qData.correct.length && 
+                            selected.every(v => qData.correct.includes(v));
+            }
+            
+            const feedback = document.getElementById('quiz-feedback');
+            
+            if (isCorrect) {
+                score++;
+                feedback.innerHTML = `
+                    <i class="fas fa-check-circle"></i> 正确！${qData.explanation}
+                `;
+                feedback.className = 'quiz-feedback correct';
+            } else {
+                feedback.innerHTML = `
+                    <i class="fas fa-times-circle"></i> 回答不正确。${qData.explanation}
+                `;
+                feedback.className = 'quiz-feedback incorrect';
+            }
+            
+            currentQ++;
+            
+            if (currentQ < quizData.length) {
+                setTimeout(() => {
+                    feedback.className = 'quiz-feedback';
+                    loadQuestion();
+                }, 3000);
+            } else {
+                setTimeout(endQuiz, 1500);
+            }
+        }
+        
+        function endQuiz() {
+            const container = document.getElementById('quiz-area');
+            container.innerHTML = `
+                <div class="quiz-complete">
+                    <h3 style="font-size:1.6rem; margin-bottom:15px; color:#4fc3f7;">
+                        <i class="fas fa-medal"></i> 答题完成！
+                    </h3>
+                    <div class="quiz-score">${score}/${totalQuestions}</div>
+                    <div class="quiz-message">
+                        ${score === totalQuestions 
+                            ? "恭喜您满分完成挑战！您已掌握溶洞地质核心知识。" 
+                            : score >= 3 
+                                ? "您对溶洞地质有深入了解，继续探索会有更多收获！" 
+                                : "您已掌握溶洞基础知识，建议通过拓展阅读加深理解！"}
+                    </div>
+                    <div class="quiz-restart">
+                        <button class="quiz-btn" id="restart-quiz">
+                            <i class="fas fa-redo"></i> 重新挑战
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            // 显示拓展阅读
+            showReadingMaterials();
+            
+            document.getElementById('restart-quiz').addEventListener('click', function() {
+                currentQ = 0;
+                score = 0;
+                loadQuestion();
+            });
+            
+            // 全对时显示姓名输入弹窗
+            if (score === totalQuestions) {
+                setTimeout(() => {
+                    document.getElementById('name-modal').classList.add('show');
+                }, 1000);
+            }
+        }
+        
+        function showReadingMaterials() {
+            const readingSection = document.getElementById('reading-section');
+            let readingHTML = `
+                <h3 class="reading-title"><i class="fas fa-book-open"></i> 拓展阅读</h3>
+                <ul class="reading-list">
+            `;
+            
+            readingMaterials.forEach(item => {
+                readingHTML += `
+                    <li class="reading-item">
+                        <div class="reading-header">
+                            <div class="reading-icon">
+                                <i class="fas ${item.icon}"></i>
+                            </div>
+                            <a href="${item.url}" class="reading-link" target="_blank">${item.title}</a>
+                        </div>
+                        <div class="reading-meta">
+                `;
+                
+                item.meta.forEach(meta => {
+                    readingHTML += `
+                        <div class="meta-item">
+                            <div class="meta-icon"><i class="fas ${meta.icon}"></i></div>
+                            <div class="meta-content">${meta.text}</div>
+                        </div>
+                    `;
+                });
+                
+                readingHTML += `
+                        </div>
+                    </li>
+                `;
+            });
+            
+            readingHTML += `</ul>`;
+            readingSection.innerHTML = readingHTML;
+        }
+        
+        function generateCertificateId() {
+            const letters = 'ABCDEFGHJKLMNPQRSTUVWXYZ';
+            const numbers = '0123456789';
+            let id = 'GS';
+            
+            // 添加年份
+            id += new Date().getFullYear().toString().substring(2);
+            
+            // 添加随机字符
+            for (let i = 0; i < 8; i++) {
+                id += numbers.charAt(Math.floor(Math.random() * numbers.length));
+            }
+            
+            return id;
+        }
+        
+        // ================= 页面初始化 =================
+        window.onload = function() {
+            // 初始化洞穴模拟
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+            
+            initDecorations();
+            drawScene();
+            setupTooltips();
+            
+            document.getElementById('add-water-btn').addEventListener('click', addWaterDrop);
+            document.getElementById('reset-btn').addEventListener('click', resetCave);
+            document.getElementById('speed-control').addEventListener('input', updateSpeed);
+            document.getElementById('ph-control').addEventListener('input', updatePH);
+            
+            updateSpeed();
+            updatePH();
+            
+            gameState.animationId = requestAnimationFrame(updateGame);
+            gameState.autoDropInterval = setInterval(autoAddWaterDrop, 1000);
+            
+            setTimeout(() => {
+                addWaterDrop();
+                setTimeout(addWaterDrop, 600);
+                setTimeout(addWaterDrop, 1200);
+            }, 800);
+            
+            document.querySelectorAll('.formation-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const targetId = this.getAttribute('data-target');
+                    
+                    document.querySelectorAll('.formation-btn').forEach(b => {
+                        b.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                    
+                    document.querySelectorAll('.formation-info').forEach(info => {
+                        info.classList.remove('active');
+                    });
+                    document.getElementById(targetId).classList.add('active');
+                });
+            });
+            
+            // 初始化问答区
+            loadQuestion();
+            
+            // 姓名确认按钮事件
+            document.getElementById('confirm-name').addEventListener('click', function() {
+                const nameInput = document.getElementById('user-name').value.trim();
+                if (nameInput) {
+                    userName = nameInput;
+                    document.getElementById('name-modal').classList.remove('show');
+                    
+                    // 生成证书
+                    certId = generateCertificateId();
+                    document.getElementById('certificate-name').textContent = userName;
+                    document.getElementById('certificate-id').textContent = certId;
+                    
+                    // 显示证书
+                    setTimeout(() => {
+                        document.getElementById('certificate-modal').classList.add('show');
+                    }, 500);
+                } else {
+                    alert('请输入您的姓名');
+                }
+            });
+            
+            // 下载证书功能（使用html2canvas）
+            document.getElementById('download-certificate').addEventListener('click', function() {
+                const certificateContent = document.querySelector('.certificate-content');
+                const certificateModal = document.getElementById('certificate-modal');
+                
+                // 显示下载提示
+                const originalText = this.innerHTML;
+                this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 生成中...';
+                this.disabled = true;
+                
+                // 设置证书背景为不透明以便截图
+                certificateContent.style.background = '#0c1923';
+                
+                html2canvas(certificateContent, {
+                    scale: 2,
+                    logging: false,
+                    useCORS: true,
+                    backgroundColor: '#0c1923'
+                }).then(canvas => {
+                    // 恢复原始样式
+                    certificateContent.style.background = '';
+                    
+                    // 创建下载链接
+                    const link = document.createElement('a');
+                    link.download = `溶洞探秘证书-${userName}.png`;
+                    link.href = canvas.toDataURL('image/png');
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    
+                    // 恢复按钮状态
+                    this.innerHTML = originalText;
+                    this.disabled = false;
+                }).catch(err => {
+                    console.error('证书生成失败:', err);
+                    alert('证书生成失败，请重试');
+                    this.innerHTML = originalText;
+                    this.disabled = false;
+                    certificateContent.style.background = '';
+                });
+            });
+            
+            // 分享按钮切换
+            document.getElementById('share-certificate').addEventListener('click', function() {
+                const shareIcons = document.getElementById('share-icons');
+                if (shareIcons.style.display === 'none' || !shareIcons.style.display) {
+                    shareIcons.style.display = 'flex';
+                    this.innerHTML = '<i class="fas fa-times"></i> 关闭分享';
+                } else {
+                    shareIcons.style.display = 'none';
+                    this.innerHTML = '<i class="fas fa-share-alt"></i> 分享成就';
+                }
+            });
+            
+            // 微信分享
+            document.querySelector('.share-icon.wechat')?.addEventListener('click', function() {
+                alert('微信分享功能已准备就绪！实际部署时需配置企业AppID。');
+            });
+            
+            // 微博分享
+            document.querySelector('.share-icon.weibo')?.addEventListener('click', function() {
+                alert('微博分享功能已准备就绪！');
+            });
+            
+            // 学习通分享
+            document.querySelector('.share-icon.learning')?.addEventListener('click', function() {
+                alert('学习通分享功能已准备就绪！');
+            });
+            
+            // 关闭证书弹窗
+            document.getElementById('certificate-close').addEventListener('click', function() {
+                document.getElementById('certificate-modal').classList.remove('show');
+            });
+            
+            // 点击证书弹窗背景关闭
+            document.getElementById('certificate-modal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.classList.remove('show');
+                }
+            });
+        };
+        
+        window.addEventListener('beforeunload', function() {
+            if (gameState.autoDropInterval) {
+                clearInterval(gameState.autoDropInterval);
+            }
+            if (gameState.animationId) {
+                cancelAnimationFrame(gameState.animationId);
+            }
+        });
+    </script>
+</body>
+</html>
